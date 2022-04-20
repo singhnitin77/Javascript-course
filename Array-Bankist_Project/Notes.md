@@ -369,231 +369,202 @@ For each method creates side effects. But now here with this map method, all we 
 And so basically they got added into a new array. And then finally we logged that entire array to the console and not the elements one by one. And so here in this map method
 
 we did not create a side effect in each of the iteration.
-All we did was to build a brand new array
+All we did was to build a brand new array.
 
 ---
----
-
-### Rest Patterns & Parameters 
-
-Rest patterns looks exactly like spread operator, but it actually does the opposite of spread operator. 
-
-Rest pattern uses the exact same syntax as spread operator however, to collect multiple elements and condense them into an array.
-
-Spread operator is to unpack an array while rest is to pack elements into an array. 
-
-```javascript
-
-// Spread because on right side of the operator, however we can also use it on the LHS side of the assignment operator with destructuring
-
-// 1) Destructuring
-
-const arr = [1,2, ...[3,4]];
-
-// REST, because on LEFT side =
-const [a,b, ...others] = [1,2,3,4,5];
-console.log(a,b, others);
-// 1 2 [3,4,5]
-/* 
-The first and second elements become this first and second variables. Rest pattern will take rest of the elements, remaining elements of the array and then put them into a new array
-*/
-```
-The rest pattern basically collects the elements that are unused in the destructuring assignment.
-
-We can actually use the three dots on both sides of the assignment operator.
-
-
-```javascript
-const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu,
-];
-
-console.log(pizza,risotto,otherFood);
-```
-ww get the string pizza the string risotto and then all the rest of the elements that we didn't select previously into their own variables and note here that the rest syntax collects all the array after the last variable.
-
-So in this case here risotto so it does not include any skipped elements so it's really just the rest of the elements
-
-It does not include any skipped elements and so for that reason, the rest pattern always must be the lest in the destructuring assignment because otherwise how will JavaScript know until when it should collect the rest of the array,
-
-Rest pattern works to collect elements in a destructuring assignment
-
-There can only ever be one rest in any destructuring assignment. 
-
-OBJECTS
-
-It also works in objects.
-
-```javascript
-// OBJECTS
-
-const {sat, ...weekdays } = restaurant.openingHours;
-console.log(weekdays);
-```
-
-```javascript
-// FUNCTIONS
-
-const add = function (...numbers) {
-  console.log(numbers);
-};
-
-add(2,3);
-add(5,3,7,2);
-add(8,2,5,3,2,1,4);
-```
-
-```javascript
-const add = function (...numbers) {
-  let sum = 0;
-  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
-  console.log(sum);
-};
-
-add(2,3);
-add(5,3,7,2);
-add(8,2,5,3,2,1,4);
-```
-The rest syntax is taking multiple numbers or multiple values and then packs them all into one array.
-
-So, Once more it is doing the opposite of the spread operator so with the spread operator we expand with the rest syntax we compress so here it's called rest arguments.
-
-
-Let's create yet another array let's just call it X
-
-```javascript
-const x = [23, 5, 7];
-add(...x);
-
-restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
-restaurant.orderPizza('mushrooms');
-```
-
-If we wanted to take these values here and call the add function
-with these three values, how would we do that?
-
-We simply use the spread operator and that's it
-
-So we're taking all the numbers of the array and spreading them here and so this would be the same as writing manually 23, five and seven and so this is a good example of showing how spread is the opposite of rest.
-
-because after these numbers being spread here they will then enter this add function here and then they will immediately be collected into this numbers array by the rest parameters.
-
-So here we unpacked the values and here pack them back again into an array.
-
-the take away from this example is that once again the rest parameters serves to collect all of the remaining basically unused parameters that were not used in this parameter.
-
-So, the spread and rests syntax both look exactly the same but they work in opposite ways depending on where they are used.
-
-So the spread operator is used where we would otherwise write values, separated by a comma.
-
-On the other hand the rest pattern is basically used where we would otherwise write variable names separated by commas.
-
-So, again the rest pattern can be used where we would write variable names, separated by commas and not values separated by commas.
-
-So it's a subtle distinction, but this is how you know when and where to use spread and rest.
 
 ---
+
+### Filter Method
+
+Filter Method used to filter for elements that satisfy a certain condition. We use a callback function again.
+
+Create an array of the deposits.
+
+Deposits are only the movements that are above zero. We want to filter out these negative values. And so that condition is so that only the values that has the condition will then make it into the new array. And passing that condition means that it's true.
+
+The trick is that we return a Boolean value.
+
+If the current movement is greater than zero, then we want to push the current element into a new array.
+
+```javascript
+const deposits = movements.filter(function (mov, i, arr) {
+  return mov > 0;
+});
+console.log(movements);
+console.log(deposits);
+```
+
+Create that here deposits for and start again with an empty array.
+
+```javascript
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+```
+
+```javascript
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+```
+
+Why not just use the four loop for everything.
+The reason for that is again the push that exists in JavaScript for using more functional code, like this.
+
+But there's also a more practical implication here. And that's because we can actually chain all of these methods together.
+
+So, basically use them all one after another to build a big final result.
+
 ---
 
-### // Short Circuiting (&& and ||)
-
-```javascript
-//console.log('---- OR ----');
-```
-
-```javascript
-console.log(3 || 'Jonas');
-// 3
-```
-The results of the OR operator doesn't always have to be a Boolean.
-
-There are three properties about logical operators.
-
-* They can use any data type.
-* They can return any data type and 
-* They do something called short circuiting. or as we also call it short circuit evaluation.
-
-
-About short circuiting, in the case of the OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value. So that's exactly what we see here with the three which is a truthy value.
-
-If the first operand is truthy here in the OR operator, then the other operand will not even be evaluated. So JavaScript will not even take a look at it. And so that's what we mean with short circuiting.
-
-```javascript
-console.log('' || 'Jonas');
-console.log(true || 0);
-console.log(undefined || null);
-// 3
-```
-
-```javascript
-console.log('' || 'Jonas'); //Jonas
-```
-The first result of this one here is Jonas. And so that's because this here is a falsy value. And so then, the second operand will actually also be evaluated, and that's Jonas and it will then be returned.
-
-And so here we see again that the result of the OR operator doesn't have to be a Boolean. It will simply return the truthy value here.
-
-```javascript
-console.log(true || 0); //true
-```
-we have true or zero. And so this first value here is truthy, and in fact, it's even true, and so therefore that will simply be the result of the operator.
-
-
-```javascript
-console.log(undefined || null); //null
-```
-Here we have undefined or null, and as you already know, undefined is a falsy value, and so we then go to the second operand, so there is no short-circuiting,
-
-and so that's then the one that's gonna be returned. So here we see null, and that happens even though null is also a falsy value.
-
-```javascript
-console.log(undefined || 0 || '' || 'Hello' || 23 || null);
-```
-
-It is hello. And that's essentially because hello here, is the first truthy value in this chain of OR operations.
-
-So we start with this one, so undefined is falsy.
-
-And so then we go to the next one, which is also falsy.
-And so then to the next one, which is also falsy, and then we get hello and hello is truthy and so therefore it will short circuit the entire evaluation and it will be the returned value.
-
-Because in the OR operation, the result is true, if at least one operand is true.
-
-```javascript
-restaurant.numGuests = 0;
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
-console.log(guests1);
-```
-
-```javascript
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2); //23
-```
-
-```javascript
-console.log('---- AND ----');
-console.log(0 && 'Jonas'); //0
-console.log(7 && 'Jonas'); //Jonas
-```
-
-```javascript
-console.log('Hello' && 23 && null && 'jonas');
-```
-
-```javascript
-// Practical example
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('mushrooms', 'spinach');
-}
-restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
-```
-
-So the OR operator will return the first truthy value of all the operands, or simply the last value if all of them are falsy.
-
-On the other hand, the AND operator will return the first falsy value or the last value if all of them are truthy.
-
-And as for practical applications, we can use the OR operator to set default values, and we can use the AND operator to execute code in the second operand if the first one is true. So play around some more with this maybe,
-
----
 ---
 
-### The Nullish Coalescing Operator
+### Reduce Method
 
+Reduce method is to essentially boil down all the elements in an array to one single value.
+
+Example of adding up all the numbers in one array.
+
+Calling it on the movements array. The results of the reduce method will be, the global balance of the account.
+
+Call the result, balance. And remember that in this case, this balance will be simply one value and not an entire array.
+
+The reduce function also gets a callback function, but this one is a little bit different from the other ones, like the one in map or for each.
+
+In these other callbacks, the first parameter is always the current element of the array. The second one is the current index and the third one is the entire array.
+
+But here in the callback function of the reduce method, the first parameter is actually something called the accumulator.
+
+And this accumulator is essentially like a snowball that keeps accumulating the value that we ultimately want to return.
+
+So in the case of adding all the elements or all the numbers of an array together, that will be the sum.
+
+This callback function here will be called in each iteration of a looping over the array. So reduce also loops over the array and calls this callback in each iteration.
+
+Since the accumulator is the value that we will keep adding to what we're gonna do here is to add the current value to the accumulator.
+the accumulator plus the current value.
+
+In each loop iteration, we return the updated accumulator so the current one, plus the new current value.
+
+This callback function is the first argument of the reduce method, but the reduce method actually has a another, so a second parameter, and that is the initial value of the accumulator.
+
+Value that we specify here, which in this case is gonna be zero is the initial value of the accumulator in the first loop iteration.
+
+In the end, that value is essentially the accumulator.
+
+```javascript
+console.log(movements);
+
+//accumulator -> SNOWBALL
+
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  console.log(`Iteration ${i}: ${acc}`);
+  return acc + cur;
+}, 0);
+
+// Using arrow function
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+// Using For Loop
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+```
+
+Balance two starts at zero, essentially this is, or initial accumulator value just like this zero and then sum plus equal the current movement.
+
+Common pattern that we always need an external variable whenever we want to use a for loop.
+
+And that's fine if you only need one loop, but it starts to become really cumbersome and unpractical when we use many loops for doing many operations.
+
+Understanding how the reduce method works is something really important, but it's also way more confusing than the other ones,
+
+```javascript
+// Maximum value
+
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
+```
+
+---
+
+---
+
+### Magic of Chaining Methods
+
+Let's say that we wanted to take all the movement deposits then convert them from euros to dollars and finally add them all up, so that we know exactly how much was deposited into the account in US dollars.
+
+Now we could of course, do each of these operations individually and store each result in a new variable.
+
+However, we can also do it all in one go.
+
+Start here with the filter method. We want to take all of the deposits. So we get the movement here and then we filter only for movements that are positive. And so only these are the deposits. And so the result of this operation here will be in our array.
+
+Now we can call map on that array. So here again, we then get a movement and now we can convert that movement to US dollars.
+
+movements times Euro to USD. And so with this we converted all of the deposits to US dollars, but now we can take this even further and on this result, we can also call a reduce.
+
+Accumulator and then the current movement, and we just need to return accumulator plus the current movement. So that's movement and zero. Store all of this into total deposits in US dollar.
+
+Three data transformations here all in one go.
+
+filter returns a new array.
+
+We can imagine all of this as a sort of pipeline that processes our data. So we put data in at the beginning, which is here, and then it goes through all these steps.
+
+So in this case, these three steps here and then in the end our input data comes out processed on the other side of the pipeline.
+
+Check out the array in each of these different steps.
+
+We can do that by using the array parameter that we get access to in this callback function.
+
+The current element, the index, and the entire array.
+
+if we want to see that result of only this operation, we can check out the current array and the next array method that has chained on that filter. And so in this case, it's the map.
+
+And so this is one of the great use cases of having access to this current array.
+
+this array has to be the result of the previous operation. So of this filter. It is not this initial movement array because that's not what we called the map method on,
+
+The map method was called on the result of movements, that filter, and therefore that is the value here of this array.
+
+```javascript
+// The Magic of Chaining Methods
+
+const eurToUsd = 1.1;
+console.log(movements);
+
+// PIPELINE
+
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurToUsd;
+  })
+  // .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
+```
+
+---
+
+---
+
+### The Find Method
+
+```javascript
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+```
