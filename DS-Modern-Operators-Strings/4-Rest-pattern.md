@@ -7,7 +7,8 @@ Rest pattern uses the exact same syntax as spread operator however, to collect m
 Spread operator is to unpack an array while rest is to pack elements into an array.
 
 ```javascript
-// Spread because on right side of the operator, however we can also use it on the LHS side of the assignment operator with destructuring
+// Spread because on right side of the operator, however we can also use it on the LHS side of the assignment operator
+// with destructuring
 
 // 1) Destructuring
 
@@ -17,8 +18,11 @@ const arr = [1, 2, ...[3, 4]];
 const [a, b, ...others] = [1, 2, 3, 4, 5];
 console.log(a, b, others);
 // 1 2 [3,4,5]
+
 /* 
-The first and second elements become this first and second variables. Rest pattern will take rest of the elements, remaining elements of the array and then put them into a new array
+The first and second elements become this first and second variables. Rest pattern will take rest of the elements, 
+
+remaining elements of the array and then put them into a new array
 */
 ```
 
