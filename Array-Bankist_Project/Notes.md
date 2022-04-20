@@ -370,3 +370,230 @@ And so basically they got added into a new array. And then finally we logged tha
 
 we did not create a side effect in each of the iteration.
 All we did was to build a brand new array
+
+---
+---
+
+### Rest Patterns & Parameters 
+
+Rest patterns looks exactly like spread operator, but it actually does the opposite of spread operator. 
+
+Rest pattern uses the exact same syntax as spread operator however, to collect multiple elements and condense them into an array.
+
+Spread operator is to unpack an array while rest is to pack elements into an array. 
+
+```javascript
+
+// Spread because on right side of the operator, however we can also use it on the LHS side of the assignment operator with destructuring
+
+// 1) Destructuring
+
+const arr = [1,2, ...[3,4]];
+
+// REST, because on LEFT side =
+const [a,b, ...others] = [1,2,3,4,5];
+console.log(a,b, others);
+// 1 2 [3,4,5]
+/* 
+The first and second elements become this first and second variables. Rest pattern will take rest of the elements, remaining elements of the array and then put them into a new array
+*/
+```
+The rest pattern basically collects the elements that are unused in the destructuring assignment.
+
+We can actually use the three dots on both sides of the assignment operator.
+
+
+```javascript
+const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu,
+];
+
+console.log(pizza,risotto,otherFood);
+```
+ww get the string pizza the string risotto and then all the rest of the elements that we didn't select previously into their own variables and note here that the rest syntax collects all the array after the last variable.
+
+So in this case here risotto so it does not include any skipped elements so it's really just the rest of the elements
+
+It does not include any skipped elements and so for that reason, the rest pattern always must be the lest in the destructuring assignment because otherwise how will JavaScript know until when it should collect the rest of the array,
+
+Rest pattern works to collect elements in a destructuring assignment
+
+There can only ever be one rest in any destructuring assignment. 
+
+OBJECTS
+
+It also works in objects.
+
+```javascript
+// OBJECTS
+
+const {sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+```
+
+```javascript
+// FUNCTIONS
+
+const add = function (...numbers) {
+  console.log(numbers);
+};
+
+add(2,3);
+add(5,3,7,2);
+add(8,2,5,3,2,1,4);
+```
+
+```javascript
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
+};
+
+add(2,3);
+add(5,3,7,2);
+add(8,2,5,3,2,1,4);
+```
+The rest syntax is taking multiple numbers or multiple values and then packs them all into one array.
+
+So, Once more it is doing the opposite of the spread operator so with the spread operator we expand with the rest syntax we compress so here it's called rest arguments.
+
+
+Let's create yet another array let's just call it X
+
+```javascript
+const x = [23, 5, 7];
+add(...x);
+
+restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
+restaurant.orderPizza('mushrooms');
+```
+
+If we wanted to take these values here and call the add function
+with these three values, how would we do that?
+
+We simply use the spread operator and that's it
+
+So we're taking all the numbers of the array and spreading them here and so this would be the same as writing manually 23, five and seven and so this is a good example of showing how spread is the opposite of rest.
+
+because after these numbers being spread here they will then enter this add function here and then they will immediately be collected into this numbers array by the rest parameters.
+
+So here we unpacked the values and here pack them back again into an array.
+
+the take away from this example is that once again the rest parameters serves to collect all of the remaining basically unused parameters that were not used in this parameter.
+
+So, the spread and rests syntax both look exactly the same but they work in opposite ways depending on where they are used.
+
+So the spread operator is used where we would otherwise write values, separated by a comma.
+
+On the other hand the rest pattern is basically used where we would otherwise write variable names separated by commas.
+
+So, again the rest pattern can be used where we would write variable names, separated by commas and not values separated by commas.
+
+So it's a subtle distinction, but this is how you know when and where to use spread and rest.
+
+---
+---
+
+### // Short Circuiting (&& and ||)
+
+```javascript
+//console.log('---- OR ----');
+```
+
+```javascript
+console.log(3 || 'Jonas');
+// 3
+```
+The results of the OR operator doesn't always have to be a Boolean.
+
+There are three properties about logical operators.
+
+* They can use any data type.
+* They can return any data type and 
+* They do something called short circuiting. or as we also call it short circuit evaluation.
+
+
+About short circuiting, in the case of the OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value. So that's exactly what we see here with the three which is a truthy value.
+
+If the first operand is truthy here in the OR operator, then the other operand will not even be evaluated. So JavaScript will not even take a look at it. And so that's what we mean with short circuiting.
+
+```javascript
+console.log('' || 'Jonas');
+console.log(true || 0);
+console.log(undefined || null);
+// 3
+```
+
+```javascript
+console.log('' || 'Jonas'); //Jonas
+```
+The first result of this one here is Jonas. And so that's because this here is a falsy value. And so then, the second operand will actually also be evaluated, and that's Jonas and it will then be returned.
+
+And so here we see again that the result of the OR operator doesn't have to be a Boolean. It will simply return the truthy value here.
+
+```javascript
+console.log(true || 0); //true
+```
+we have true or zero. And so this first value here is truthy, and in fact, it's even true, and so therefore that will simply be the result of the operator.
+
+
+```javascript
+console.log(undefined || null); //null
+```
+Here we have undefined or null, and as you already know, undefined is a falsy value, and so we then go to the second operand, so there is no short-circuiting,
+
+and so that's then the one that's gonna be returned. So here we see null, and that happens even though null is also a falsy value.
+
+```javascript
+console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+```
+
+It is hello. And that's essentially because hello here, is the first truthy value in this chain of OR operations.
+
+So we start with this one, so undefined is falsy.
+
+And so then we go to the next one, which is also falsy.
+And so then to the next one, which is also falsy, and then we get hello and hello is truthy and so therefore it will short circuit the entire evaluation and it will be the returned value.
+
+Because in the OR operation, the result is true, if at least one operand is true.
+
+```javascript
+restaurant.numGuests = 0;
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests1);
+```
+
+```javascript
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2); //23
+```
+
+```javascript
+console.log('---- AND ----');
+console.log(0 && 'Jonas'); //0
+console.log(7 && 'Jonas'); //Jonas
+```
+
+```javascript
+console.log('Hello' && 23 && null && 'jonas');
+```
+
+```javascript
+// Practical example
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+```
+
+So the OR operator will return the first truthy value of all the operands, or simply the last value if all of them are falsy.
+
+On the other hand, the AND operator will return the first falsy value or the last value if all of them are truthy.
+
+And as for practical applications, we can use the OR operator to set default values, and we can use the AND operator to execute code in the second operand if the first one is true. So play around some more with this maybe,
+
+---
+---
+
+### The Nullish Coalescing Operator
+

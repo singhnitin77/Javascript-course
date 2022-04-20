@@ -91,3 +91,212 @@ We can also import values from other modules. these other modules from which we 
 ---
 
 ---
+
+### EXPORTING AND IMPORING IN ES6 MODULES
+
+---
+
+---
+
+### TOP LEVEL AWAIT
+
+Starting with ES2022 version, we can now use the await keyword outside of async function atleast in modules.
+which we called top level await.
+
+This only works in modules. 
+
+```javascript
+const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+const data = await res.json();
+console.log(data);
+```
+This actaully blocks the execution of the entire module now.   
+
+```javascript
+console.log('Start fetching');
+const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+const data = await res.json();
+console.log(data);
+console.log('Something');
+```
+This await keyword here, which is now outside of async function is now blocking the entire execution of this module.
+
+This can be useful in many situations but many times it can also be harmful if it's long running task.
+
+One important implication of using top level await is that if one module imports a module which has a top level await, then the importing module will wait for the imported module to finish the blocking code.
+
+---
+
+---
+
+### MODULE PATTERN
+
+The main goal of the module pattern is to encapsulate functionality, to have private data, and to expose a public API.
+
+the best way of achieving all that is by simply using a function, because functions give us private data by default and allow us to return values, which can become our public API.
+
+The problem is that if we wanted one module per file, like we have with ES6 modules, then we would have to create different scripts and link all of them in the HTML file.
+
+And that then creates a couple of problems, like we have to be careful with the order in which we declare them in HTML, and we would have all of the variables living in the global scope, and finally, we also couldn't bundle them together using a module bundler.
+
+So the module pattern that we just learned about does indeed work quite good, but it has some limitations.
+And so that's exactly the reason why native modules were added to the language in ES6.
+
+---
+
+---
+
+### COMMON JS MODULES 
+
+```javascript
+
+// Export
+export.addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to cart`);
+};
+
+// Import
+const { addToCart } = require('./shoppingCart.js');
+```
+
+Besides native ES Modules, and the module pattern, there are also other module systems,that have been used by JavaScript in the past.
+
+But again, they were not native JavaScript. so they relied on some external implementations.
+
+And two examples are:
+AMD Modules,
+and CommonJS modules.
+
+Now CommonJS modules are important for us, because they have been used in Node.js, for almost all of its existence.
+
+So only very recently, ES Modules have actually been implemented, in Node.js.
+ 
+Almost all the modules, in the npm repository, So all these modules that we can use in our own code, still use the CommonJS module system.
+
+And the reason for that, is that npm was originally only intended for node. Which as they said, uses commonJS.
+
+Only later npm became the standard repository, for the whole JavaScript world.
+
+Now we are basically stuck,with CommonJS.
+
+Just like ES6 modules,in CommonJS, one file, is one module. And we export something from a module, using export.dot, and then the name of the export.
+
+this is not going to work in the browser,
+
+but it would work in Node.js.
+
+So this export keyword here,
+
+is basically an object
+
+that again, is of course not defined here
+
+in our code,
+
+and also not in the browser.
+
+But in Node.js,
+
+it is an important object,
+
+that is used.
+
+Now then to import something,...
+
+And that's just right this here.
+
+So export,
+
+and import.
+
+And so this code is not for you to write.
+
+I just want to show this to you.
+
+So if we didn't want it to import this,
+
+would be pretty similar,
+
+to ES Modules actually,
+
+but then from here,
+
+we will call a require function.
+
+So just like this.
+
+So again, require
+
+is of course not defined,
+
+here in our browser environment,
+
+but it is defined in Node.js,
+
+because this is part
+
+of the CommonJS specification.
+
+And that's actually all I had to show you,
+
+even though this is, of course,
+
+just scratching the surface.
+
+But all I wanted to do here,
+
+is to just let you know,
+
+that there are different module systems,
+
+and that CommonJS,
+
+is particularly important,
+
+in the world of JavaScript.
+
+Now in the long run,
+
+ES6 Modules,
+
+will hopefully,
+
+and probably,
+
+replace all of these different module systems.
+
+But it's still gonna be
+
+a long way until you're there.
+
+And so it's good
+
+that at least you know,
+
+what is (indistinct),
+
+when you stumble upon
+
+the syntax in the future,
+
+in your work.
+
+And with this,
+
+let's move on,
+
+to the rest of the section,
+
+where we will learn
+
+how to use third party packages from npm,
+
+how to bundle all modules together,
+
+and also how to transpile or code back,
+
+to ES 5,
+
+for old browsers.
+
