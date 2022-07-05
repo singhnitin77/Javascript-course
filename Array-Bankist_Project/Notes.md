@@ -568,3 +568,270 @@ console.log(accounts);
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
 ```
+
+---
+
+---
+
+### Some and Every
+
+let's look back at the includes method
+
+We can use the includes method to test if an array includes a certain value.
+
+Now, however, we can only really test for equality.
+
+Includes, here, returns true, if any value in the array is exactly equal to minus 130, This is essentially testing for equality.
+But what if we wanted to test for a condition.
+
+And so that's where the some method comes into play.
+
+we would like to know if there has been any deposits on this account.
+
+In other words, we want to know if there is any positive movement in this array.
+
+The same callback function which has to return either true or false.
+
+```javascript
+// Some
+console.log(movements);
+
+// EQUALITY
+console.log(movements.includes(-130));
+```
+
+```javascript
+// SOME: CONDITION
+
+console.log(movements.some(mov => mov === -130));
+
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+```
+
+### Every Method
+
+The close cousin of the some method, which is the every method.
+
+The every method is pretty similar to the some method, but as you might guess, the difference between them, is that every only returns true if all of the elements in the array satisfy the condition that we pass in.
+
+So in other words, if every element passes the test, in our callback function, only then, the every method returns true.
+
+And that's why the method is called every in the first place.
+
+Check if all of our movements here are deposits. And well, indeed, they are not. And that's why we get false.
+
+However, we do have one account, which only has positive movements.
+
+That's account four. So account four, all the movements are positive.
+
+So account four and then the same condition, and every is not a function, and that's of course, because we are still missing the movements array.
+
+And so that indeed proves that the every returns true, if all the elements in the array satisfy this condition. Because in this movements array, all of the values are in fact, above zero.
+
+So that's how the every method works.
+
+```javascript
+// EVERY
+
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+```
+
+We have always written the callback function directly as an argument into our array methods.
+
+However, we could also write this function separately, and then pass the function as a callback.
+
+```javascript
+// Separate callback
+
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
+```
+
+---
+
+---
+
+### flat and flatMap
+
+What if we wanted to take all these elements in the sub array and put all of these together in just one big array, which contains all the numbers here from one to eight.
+
+Well, that's pretty simple using the new flat method.
+
+And new because flat and also flat map were introduced in ES 2019, so they are pretty recent.
+
+They will then not work in super old browsers.
+
+So no callback function, just like this, and we get indeed or full array from one to eight. So just removed the nested arrays and flattened the array, which is why the method is called flat.
+
+We have an array, which is even deeper nested, so let's call it arrDeep.
+
+So now we have an array inside and array inside an array.
+
+Result, still contains the two inner arrays.
+
+This means that the flat method only goes one level deep when flattening the array. So this three here was inside the first level of nesting, and so therefore it was taken out,
+
+We can fortunately fix that by using the death argument. So right now basically flat is running with the one here as the depth.
+
+And so if we run it with one, which is the default, then we get this, but we can go two levels deep. And so now we get the same result as before.
+
+And that's because it now goes even into the second level of nesting and also takes the element out of that array.
+
+```javascript
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+```
+
+Calculate the overall balance of all the movements of all the accounts.
+
+We have all these movements stored in arrays and these arrays are inside the objects in the accounts array.
+
+So in this array that we have been using, so accounts, so that's the one.
+
+the first thing to do is to take them out of here and put them all into one array.
+
+Create a variable here called accountMovements.
+
+and then what we want to create is the new array, but with the same length, which only contains these movements array.
+
+We can use the map method. So in each account take the account.movements and so return that value into the new array.
+
+All right, and so now we have this array, which then in turn contains the arrays of all the movements.
+
+```javascript
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+```
+
+```javascript
+// flat
+
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+```
+
+It turns out that using a map first and then flattening the result is a pretty common operation.
+
+So that's exactly what we have here. So first we map and then we flat that result.
+
+There is another method that was also introduced at the same time, which is flat map.
+
+flat map essentially combines a map and a flat method into just one method, which is better for performance.
+
+And since flat map also does mapping, it needs to receive exactly the same callback as a map method.
+
+So this is essentially a map method that all it does is in the end, it then flattens the result. The result is the same.
+
+Flat map here only goes one level deep and we cannot change it.
+
+So if you do need to go deeper than just one level, you still need to use the flat method.
+
+```javascript
+// flatMap
+
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance2);
+```
+
+---
+
+---
+
+### Sorting Arrays
+
+Start here with an array of strings and let's call it owners.
+
+Our array here, nicely sorted. alphabetically from A to Z.
+
+This actually mutates the original array. We have to be very careful with this method. this is with strings.
+
+```javascript
+// Strings
+
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+```
+
+With numbers
+
+These numbers are not at all ordered in any way.
+
+And the reason for this, is that the sort method does the sorting based on strings.
+
+So that might sound weird, but that is just how it works by default.
+
+So basically what it does is to convert everything to strings, and then it does the sorting itself. And if we look at the results as if they were strings, then the result actually makes sense.
+
+first we have all the minuses here.
+
+And so that's basically alphabetically, the first string that occurs.
+
+These three are alphabetically ordered if they were strings, at the same here.
+
+So you have one first, then two, then three, then four,
+
+and then seven.
+
+If they were strings, then this result would make sense, but they are not strings. And so we have to fix this. And in fact, we can fix this by passing in a compare or callback function, into the sort method.
+
+```javascript
+// Numbers
+
+console.log(movements);
+console.log(movements.sort());
+```
+
+```javascript
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+
+console.log(movements);
+```
+
+Another way for Ascending
+
+```javascript
+movements.sort((a, b) => a - b);
+console.log(movements);
+```
+
+```javascript
+// Descending;
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+
+console.log(movements);
+```
+
+Another way for Descending
+
+```javascript
+movements.sort((a, b) => b - a);
+console.log(movements);
+```

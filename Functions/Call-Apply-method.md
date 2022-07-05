@@ -1,28 +1,6 @@
 ## The call and apply Methods
 
 ```javascript
-const book = lufthansa.book;
-// Does NOT work
-// book(23, 'Sarah Williams');
-// Call method
-book.call(eurowings, 23, "Sarah Williams");
-console.log(eurowings);
-book.call(lufthansa, 239, "Mary Cooper");
-console.log(lufthansa);
-const swiss = {
-  airline: "Swiss Air Lines",
-  iataCode: "LX",
-  bookings: [],
-};
-book.call(swiss, 583, "Mary Cooper");
-// Apply method
-const flightData = [583, "George Cooper"];
-book.apply(swiss, flightData);
-console.log(swiss);
-book.call(swiss, ...flightData);
-```
-
-```javascript
 const lufthansa = {
   airline: "Lufthansa",
   iataCode: "LH",
